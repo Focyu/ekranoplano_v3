@@ -6,9 +6,9 @@
  *
  * Code generation for model "pid_control_V3".
  *
- * Model version              : 12.131
+ * Model version              : 12.132
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C++ source code generated on : Sun Apr 26 11:39:00 2026
+ * C++ source code generated on : Sun Apr 26 18:03:33 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -115,6 +115,45 @@ struct SL_Bus_gazebo_msgs_SetEntityStateRequest
 
 #endif
 
+#ifndef DEFINED_TYPEDEF_FOR_SL_Bus_builtin_interfaces_Time_
+#define DEFINED_TYPEDEF_FOR_SL_Bus_builtin_interfaces_Time_
+
+struct SL_Bus_builtin_interfaces_Time
+{
+  int32_T sec;
+  uint32_T nanosec;
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_SL_Bus_std_msgs_Header_
+#define DEFINED_TYPEDEF_FOR_SL_Bus_std_msgs_Header_
+
+struct SL_Bus_std_msgs_Header
+{
+  SL_Bus_builtin_interfaces_Time stamp;
+  uint8_T frame_id[128];
+  SL_Bus_ROSVariableLengthArrayInfo frame_id_SL_Info;
+};
+
+#endif
+
+#ifndef DEFINED_TYPEDEF_FOR_SL_Bus_sensor_msgs_Imu_
+#define DEFINED_TYPEDEF_FOR_SL_Bus_sensor_msgs_Imu_
+
+struct SL_Bus_sensor_msgs_Imu
+{
+  SL_Bus_std_msgs_Header header;
+  SL_Bus_geometry_msgs_Quaternion orientation;
+  real_T orientation_covariance[9];
+  SL_Bus_geometry_msgs_Vector3 angular_velocity;
+  real_T angular_velocity_covariance[9];
+  SL_Bus_geometry_msgs_Vector3 linear_acceleration;
+  real_T linear_acceleration_covariance[9];
+};
+
+#endif
+
 #ifndef DEFINED_TYPEDEF_FOR_SL_Bus_gazebo_msgs_SetEntityStateResponse_
 #define DEFINED_TYPEDEF_FOR_SL_Bus_gazebo_msgs_SetEntityStateResponse_
 
@@ -178,6 +217,19 @@ struct robotics_slcore_internal_bloc_T
 };
 
 #endif                              /* struct_robotics_slcore_internal_bloc_T */
+
+#ifndef struct_ros_slros2_internal_block_Pub_T
+#define struct_ros_slros2_internal_block_Pub_T
+
+struct ros_slros2_internal_block_Pub_T
+{
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  boolean_T QOSAvoidROSNamespaceConventions;
+};
+
+#endif                              /* struct_ros_slros2_internal_block_Pub_T */
 
 #ifndef struct_ros_slros2_internal_block_Sub_T
 #define struct_ros_slros2_internal_block_Sub_T

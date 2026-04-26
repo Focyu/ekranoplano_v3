@@ -1,5 +1,5 @@
 // Copyright 2022-2025 The MathWorks, Inc.
-// Generated 26-Apr-2026 11:39:15
+// Generated 26-Apr-2026 18:03:52
 #ifndef _SLROS2_INITIALIZE_H_
 #define _SLROS2_INITIALIZE_H_
 #include "pid_control_V3_types.h"
@@ -33,6 +33,8 @@ inline rclcpp::QoS getQOSSettingsFromRMW(const rmw_qos_profile_t& qosProfile) {
   rclcpp::QoS qos(init, qosProfile);
   return qos;
 }
+// pid_control_V3/Publish
+extern SimulinkPublisher<sensor_msgs::msg::Imu,SL_Bus_sensor_msgs_Imu> Pub_pid_control_V3_548;
 // pid_control_V3/SUBSYSTEM_MODEL/Subscribe1_TURBULENCIA1
 extern SimulinkSubscriber<std_msgs::msg::Bool,SL_Bus_std_msgs_Bool> Sub_pid_control_V3_423;
 // pid_control_V3/SUBSYSTEM_MODEL/Subscribe_HEAVE

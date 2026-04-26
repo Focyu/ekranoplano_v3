@@ -35,6 +35,7 @@ find_package(ament_cmake_ros REQUIRED)
 find_package( gazebo_msgs REQUIRED)
 find_package( rclcpp REQUIRED)
 find_package( rosgraph_msgs REQUIRED)
+find_package( sensor_msgs REQUIRED)
 find_package( std_msgs REQUIRED)
 # Add package include directories
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/pid_control_v3")
@@ -86,6 +87,7 @@ ament_target_dependencies(
   "gazebo_msgs"
   "rclcpp"
   "rosgraph_msgs"
+  "sensor_msgs"
   "std_msgs"
 )
 target_include_directories(pid_control_V3 PUBLIC
@@ -116,4 +118,4 @@ add_custom_command(
 				   )				   
 endforeach(file_i)
 ament_package()
-# Generated on Sun Apr 26 11:39:38 2026
+# Generated on Sun Apr 26 18:04:10 2026

@@ -2,6 +2,7 @@
 #define _SLROS_BUSMSG_CONVERSION_H_
 
 #include "rclcpp/rclcpp.hpp"
+#include <builtin_interfaces/msg/time.hpp>
 #include <gazebo_msgs/msg/entity_state.hpp>
 #include <gazebo_msgs/srv/set_entity_state.hpp>
 #include <geometry_msgs/msg/point.hpp>
@@ -9,11 +10,16 @@
 #include <geometry_msgs/msg/quaternion.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <geometry_msgs/msg/vector3.hpp>
+#include <sensor_msgs/msg/imu.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/float64.hpp>
+#include <std_msgs/msg/header.hpp>
 #include "pid_control_V3_types.h"
 #include "slros_msgconvert_utils.h"
 
+
+[[maybe_unused]] static void convertFromBus(builtin_interfaces::msg::Time& msgPtr, SL_Bus_builtin_interfaces_Time const* busPtr);
+[[maybe_unused]] static void convertToBus(SL_Bus_builtin_interfaces_Time* busPtr, const builtin_interfaces::msg::Time& msgPtr);
 
 [[maybe_unused]] static void convertFromBus(gazebo_msgs::msg::EntityState& msgPtr, SL_Bus_gazebo_msgs_EntityState const* busPtr);
 [[maybe_unused]] static void convertToBus(SL_Bus_gazebo_msgs_EntityState* busPtr, const gazebo_msgs::msg::EntityState& msgPtr);
@@ -39,12 +45,37 @@
 [[maybe_unused]] static void convertFromBus(geometry_msgs::msg::Vector3& msgPtr, SL_Bus_geometry_msgs_Vector3 const* busPtr);
 [[maybe_unused]] static void convertToBus(SL_Bus_geometry_msgs_Vector3* busPtr, const geometry_msgs::msg::Vector3& msgPtr);
 
+[[maybe_unused]] static void convertFromBus(sensor_msgs::msg::Imu& msgPtr, SL_Bus_sensor_msgs_Imu const* busPtr);
+[[maybe_unused]] static void convertToBus(SL_Bus_sensor_msgs_Imu* busPtr, const sensor_msgs::msg::Imu& msgPtr);
+
 [[maybe_unused]] static void convertFromBus(std_msgs::msg::Bool& msgPtr, SL_Bus_std_msgs_Bool const* busPtr);
 [[maybe_unused]] static void convertToBus(SL_Bus_std_msgs_Bool* busPtr, const std_msgs::msg::Bool& msgPtr);
 
 [[maybe_unused]] static void convertFromBus(std_msgs::msg::Float64& msgPtr, SL_Bus_std_msgs_Float64 const* busPtr);
 [[maybe_unused]] static void convertToBus(SL_Bus_std_msgs_Float64* busPtr, const std_msgs::msg::Float64& msgPtr);
 
+[[maybe_unused]] static void convertFromBus(std_msgs::msg::Header& msgPtr, SL_Bus_std_msgs_Header const* busPtr);
+[[maybe_unused]] static void convertToBus(SL_Bus_std_msgs_Header* busPtr, const std_msgs::msg::Header& msgPtr);
+
+
+
+// Conversions between SL_Bus_builtin_interfaces_Time and builtin_interfaces::msg::Time
+
+[[maybe_unused]] static void convertFromBus(builtin_interfaces::msg::Time& msgPtr, SL_Bus_builtin_interfaces_Time const* busPtr)
+{
+  const std::string rosMessageType("builtin_interfaces/Time");
+
+  msgPtr.nanosec =  busPtr->nanosec;
+  msgPtr.sec =  busPtr->sec;
+}
+
+[[maybe_unused]] static void convertToBus(SL_Bus_builtin_interfaces_Time* busPtr, const builtin_interfaces::msg::Time& msgPtr)
+{
+  const std::string rosMessageType("builtin_interfaces/Time");
+
+  busPtr->nanosec =  msgPtr.nanosec;
+  busPtr->sec =  msgPtr.sec;
+}
 
 
 // Conversions between SL_Bus_gazebo_msgs_EntityState and gazebo_msgs::msg::EntityState
@@ -207,6 +238,35 @@
 }
 
 
+// Conversions between SL_Bus_sensor_msgs_Imu and sensor_msgs::msg::Imu
+
+[[maybe_unused]] static void convertFromBus(sensor_msgs::msg::Imu& msgPtr, SL_Bus_sensor_msgs_Imu const* busPtr)
+{
+  const std::string rosMessageType("sensor_msgs/Imu");
+
+  convertFromBus(msgPtr.angular_velocity, &busPtr->angular_velocity);
+  convertFromBusFixedPrimitiveArray(msgPtr.angular_velocity_covariance, busPtr->angular_velocity_covariance);
+  convertFromBus(msgPtr.header, &busPtr->header);
+  convertFromBus(msgPtr.linear_acceleration, &busPtr->linear_acceleration);
+  convertFromBusFixedPrimitiveArray(msgPtr.linear_acceleration_covariance, busPtr->linear_acceleration_covariance);
+  convertFromBus(msgPtr.orientation, &busPtr->orientation);
+  convertFromBusFixedPrimitiveArray(msgPtr.orientation_covariance, busPtr->orientation_covariance);
+}
+
+[[maybe_unused]] static void convertToBus(SL_Bus_sensor_msgs_Imu* busPtr, const sensor_msgs::msg::Imu& msgPtr)
+{
+  const std::string rosMessageType("sensor_msgs/Imu");
+
+  convertToBus(&busPtr->angular_velocity, msgPtr.angular_velocity);
+  convertToBusFixedPrimitiveArray(busPtr->angular_velocity_covariance, msgPtr.angular_velocity_covariance, slros::NoopWarning());
+  convertToBus(&busPtr->header, msgPtr.header);
+  convertToBus(&busPtr->linear_acceleration, msgPtr.linear_acceleration);
+  convertToBusFixedPrimitiveArray(busPtr->linear_acceleration_covariance, msgPtr.linear_acceleration_covariance, slros::NoopWarning());
+  convertToBus(&busPtr->orientation, msgPtr.orientation);
+  convertToBusFixedPrimitiveArray(busPtr->orientation_covariance, msgPtr.orientation_covariance, slros::NoopWarning());
+}
+
+
 // Conversions between SL_Bus_std_msgs_Bool and std_msgs::msg::Bool
 
 [[maybe_unused]] static void convertFromBus(std_msgs::msg::Bool& msgPtr, SL_Bus_std_msgs_Bool const* busPtr)
@@ -238,6 +298,25 @@
   const std::string rosMessageType("std_msgs/Float64");
 
   busPtr->data =  msgPtr.data;
+}
+
+
+// Conversions between SL_Bus_std_msgs_Header and std_msgs::msg::Header
+
+[[maybe_unused]] static void convertFromBus(std_msgs::msg::Header& msgPtr, SL_Bus_std_msgs_Header const* busPtr)
+{
+  const std::string rosMessageType("std_msgs/Header");
+
+  convertFromBusVariablePrimitiveArray(msgPtr.frame_id, busPtr->frame_id, busPtr->frame_id_SL_Info);
+  convertFromBus(msgPtr.stamp, &busPtr->stamp);
+}
+
+[[maybe_unused]] static void convertToBus(SL_Bus_std_msgs_Header* busPtr, const std_msgs::msg::Header& msgPtr)
+{
+  const std::string rosMessageType("std_msgs/Header");
+
+  convertToBusVariablePrimitiveArray(busPtr->frame_id, busPtr->frame_id_SL_Info, msgPtr.frame_id, slros::EnabledWarning(rosMessageType, "frame_id"));
+  convertToBus(&busPtr->stamp, msgPtr.stamp);
 }
 
 
