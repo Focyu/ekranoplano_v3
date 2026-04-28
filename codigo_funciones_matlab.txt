@@ -1,7 +1,7 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
 Modelo: pid_control_V3
-Fecha: 27-Apr-2026 20:20:07
+Fecha: 27-Apr-2026 20:22:00
 ==========================================================
 
 ----------------------------------------------------------
@@ -169,7 +169,8 @@ Delta_Cm_IGE = -Cm_h * exp(-4.0*abs(hw/bw));
 Cl_da = -0.5; Cn_dr = -0.3; Cl_p = -2.0; Cn_r = -1.5;
 Cn_da = -0.05;
 
-Cl = -0.0286*beta   + Cl_p*(p_aero*bw/(2*Va))   + Cl_da*u1;
+Cl_beta = -0.12;
+Cl = Cl_beta*beta + Cl_p*(p_aero*bw/(2*Va)) + Cl_da*u1;
 Cm = Cm_alpha*alpha + Delta_Cm_IGE + Cm_q*(q_aero*cbar/(2*Va)) + Cm_de*u2;
 Cn = -0.1146*beta   + Cn_r*(r_aero*bw/(2*Va))   + Cn_dr*u3  + Cn_da*u1;
 MAcg_b = [Cl; Cm; Cn] .* [bw*Q*Sw; cbar*Q*Sw; bw*Q*Sw];
