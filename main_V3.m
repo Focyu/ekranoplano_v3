@@ -45,7 +45,7 @@ Ki_u = 0.015;
 Kd_u = 0.005;   
 
 % 2. Lazo de Altura
-h_sp = 0.550;    % Setpoint de altura (5 cm)
+h_sp = 1.550;    % Setpoint de altura (5 cm)
 Kp_h = 2.0;
 Ki_h = 0.25;
 Kd_h = 4.5;
@@ -61,15 +61,15 @@ Kd_pitch = -0.3;
 
 % 4. Lazo de Timón (Yaw)
 psi_sp = 0 * (pi/180); 
-Kp_yaw = -0.40;   
-Ki_yaw = -0.005;  
-Kd_yaw = -0.4;   
+Kp_yaw = 0.30;   
+Ki_yaw = -0.0;  
+Kd_yaw = -0.0;   
 
 % 5. Lazo de Alerones (Roll)
 phi_sp = 0.0; 
-Kp_roll = -1.2;   
-Ki_roll = -0.08;  
-Kd_roll = -0.5;   
+Kp_roll = -0.2;   
+Ki_roll = -0.0;  
+Kd_roll = -0.1;   
 
 
 
