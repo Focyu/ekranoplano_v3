@@ -9,8 +9,6 @@ Selector2
 pid_control_V3/Bus
 Selector3
 pid_control_V3/Call Service
-pid_control_V3/Constant
-pid_control_V3/Constant2
 pid_control_V3/Constant_U
 pid_control_V3/Coordinate Transformation Conversion
 pid_control_V3/Demux
@@ -20,11 +18,12 @@ pid_control_V3/From
 pid_control_V3/From1
 pid_control_V3/From2
 pid_control_V3/Gain
-pid_control_V3/Gain-theta
+pid_control_V3/Gain1
 pid_control_V3/Gain2
 pid_control_V3/Gain3
 pid_control_V3/Gain4
 pid_control_V3/Gain5
+pid_control_V3/Gain6
 pid_control_V3/Gain7
 pid_control_V3/MATLAB Function
 pid_control_V3/MATLAB Function-IMU2
@@ -178,13 +177,11 @@ pid_control_V3/Scope-Direccion
 pid_control_V3/Scopes-States
 pid_control_V3/Subscribe-ALTURA1
 pid_control_V3/Subscribe-YAW
-pid_control_V3/Sum
 pid_control_V3/Sum1
 pid_control_V3/Sum2
 pid_control_V3/Sum3
 pid_control_V3/Sum4
 pid_control_V3/Sum5
-pid_control_V3/Sum6
 pid_control_V3/Switch2
 pid_control_V3/Switch3
 pid_control_V3/Terminator
