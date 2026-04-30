@@ -8,7 +8,7 @@ rho      = 1.225;
 Sp_prop  = pi*(D_prop^2/4);
 km_motor = 25.0;
 Cp = Cp_motor;   % alias para el bloque Simulink
-D  = D_prop;     % alias para el bloque Simulink (si lo usa)
+D  = D_prop;     % alias para el bloque Simulink 
 Sp = pi*(D^2/4);
 km = km_motor;  
 max_thrust_force_per_motor = 0.5*rho*Sp_prop*Cp_motor*km_motor^2;
@@ -46,13 +46,13 @@ Kd_u = 0.005;
 
 % 2. Lazo de Altura
 h_sp = 1.550;    % Setpoint de altura (5 cm)
-Kp_h = 2.0;
-Ki_h = 0.25;
-Kd_h = 4.5;
+Kp_h = 1.2;
+Ki_h = 0.06;
+Kd_h = 3.5;
 
 % Límite de seguridad
-theta_max =  5.0 * (pi/180); 
-theta_min = -3.0 * (pi/180); 
+theta_max =  6.0 * (pi/180); 
+theta_min = -4.0 * (pi/180); 
 
 % 3. Lazo Interno de Elevador (Pitch)
 Kp_pitch = -0.50;   
@@ -61,15 +61,15 @@ Kd_pitch = -0.3;
 
 % 4. Lazo de Timón (Yaw)
 psi_sp = 0 * (pi/180); 
-Kp_yaw = 0.30;   
-Ki_yaw = -0.0;  
-Kd_yaw = -0.0;   
+Kp_yaw = -0.80;   
+Ki_yaw = -0.25;  
+Kd_yaw = -1.05;   
 
 % 5. Lazo de Alerones (Roll)
 phi_sp = 0.0; 
-Kp_roll = -0.2;   
-Ki_roll = -0.0;  
-Kd_roll = -0.1;   
+Kp_roll = 0.20;   
+Ki_roll = 0.01;  
+Kd_roll = 0.05;   
 
 
 
