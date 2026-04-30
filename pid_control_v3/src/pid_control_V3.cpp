@@ -6,9 +6,9 @@
  *
  * Code generation for model "pid_control_V3".
  *
- * Model version              : 12.138
+ * Model version              : 12.141
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C++ source code generated on : Wed Apr 29 22:29:37 2026
+ * C++ source code generated on : Thu Apr 30 09:40:21 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -22,8 +22,8 @@
 #include "pid_control_V3_types.h"
 #include <string.h>
 #include "pid_control_V3_private.h"
-#include <math.h>
 #include <emmintrin.h>
+#include <math.h>
 
 extern "C"
 {
@@ -739,7 +739,7 @@ void pid_control_V3::step()
       pid_control_V3_DW.IC_FirstOutputTime = false;
 
       /* InitialCondition: '<S13>/IC' */
-      memcpy(&pid_control_V3_B.IC[0], &pid_control_V3_ConstP.pooled11[0], 12U *
+      memcpy(&pid_control_V3_B.IC[0], &pid_control_V3_ConstP.pooled10[0], 12U *
              sizeof(real_T));
     }
 
@@ -803,18 +803,17 @@ void pid_control_V3::step()
   memcpy(&pid_control_V3_B.x[0], &pid_control_V3_X.Integrator_CSTATE[0], 12U *
          sizeof(real_T));
 
-  /* MATLABSystem: '<Root>/Coordinate Transformation Conversion' incorporates:
-   *  Constant: '<Root>/Constant'
-   *  Constant: '<Root>/Constant2'
-   *  Gain: '<Root>/Gain-theta'
-   *  Gain: '<Root>/Gain2'
-   *  Sum: '<Root>/Sum'
-   *  Sum: '<Root>/Sum6'
+  /* Gain: '<Root>/Gain2' incorporates:
+   *  Gain: '<Root>/Gain1'
+   *  MATLABSystem: '<Root>/Coordinate Transformation Conversion'
    */
-  pid_control_V3_B.wbe_b[0] = (-pid_control_V3_B.x[8] + 1.5707963267948966) /
-    2.0;
-  pid_control_V3_B.wbe_b[1] = -pid_control_V3_B.x[7] / 2.0;
-  pid_control_V3_B.wbe_b[2] = (pid_control_V3_B.x[6] + 1.5707963267948966) / 2.0;
+  _mm_storeu_pd(&pid_control_V3_B.wbe_b[0], _mm_div_pd(_mm_set_pd
+    (-pid_control_V3_B.x[7], -pid_control_V3_B.x[8]), _mm_set1_pd(2.0)));
+
+  /* MATLABSystem: '<Root>/Coordinate Transformation Conversion' incorporates:
+   *  SignalConversion generated from: '<Root>/Coordinate Transformation Conversion'
+   */
+  pid_control_V3_B.wbe_b[2] = pid_control_V3_B.x[6] / 2.0;
   pid_control_V3_B.sina = sin(pid_control_V3_B.wbe_b[0]);
   pid_control_V3_B.sinb = sin(pid_control_V3_B.wbe_b[1]);
   pid_control_V3_B.sinc = sin(pid_control_V3_B.wbe_b[2]);
@@ -902,14 +901,14 @@ void pid_control_V3::step()
    *  Integrator: '<S99>/Filter'
    *  Sum: '<S99>/SumD'
    */
-  pid_control_V3_B.FilterCoefficient = (4.5 * pid_control_V3_B.cosa -
+  pid_control_V3_B.FilterCoefficient = (3.5 * pid_control_V3_B.cosa -
     pid_control_V3_X.Filter_CSTATE) * 100.0;
 
   /* Sum: '<S113>/Sum' incorporates:
    *  Gain: '<S109>/Proportional Gain'
    *  Integrator: '<S104>/Integrator'
    */
-  pid_control_V3_B.cosb = (2.0 * pid_control_V3_B.cosa +
+  pid_control_V3_B.cosb = (1.2 * pid_control_V3_B.cosa +
     pid_control_V3_X.Integrator_CSTATE_n) + pid_control_V3_B.FilterCoefficient;
 
   /* Saturate: '<S111>/Saturation' */
@@ -967,7 +966,7 @@ void pid_control_V3::step()
    *  Gain: '<S215>/Proportional Gain'
    *  Integrator: '<S210>/Integrator'
    */
-  pid_control_V3_B.sinb = (-1.5 * pid_control_V3_B.Switch_l +
+  pid_control_V3_B.sinb = (-0.8 * pid_control_V3_B.Switch_l +
     pid_control_V3_X.Integrator_CSTATE_d) + pid_control_V3_B.FilterCoefficient_p;
 
   /* Saturate: '<S217>/Saturation' */
@@ -1006,14 +1005,14 @@ void pid_control_V3::step()
    *  Integrator: '<S47>/Filter'
    *  Sum: '<S47>/SumD'
    */
-  pid_control_V3_B.FilterCoefficient_c = (0.15 * pid_control_V3_B.Switch -
+  pid_control_V3_B.FilterCoefficient_c = (0.05 * pid_control_V3_B.Switch -
     pid_control_V3_X.Filter_CSTATE_g) * 100.0;
 
   /* Sum: '<S61>/Sum' incorporates:
    *  Gain: '<S57>/Proportional Gain'
    *  Integrator: '<S52>/Integrator'
    */
-  pid_control_V3_B.cosc = (0.25 * pid_control_V3_B.Switch +
+  pid_control_V3_B.cosc = (0.2 * pid_control_V3_B.Switch +
     pid_control_V3_X.Integrator_CSTATE_m) + pid_control_V3_B.FilterCoefficient_c;
 
   /* Saturate: '<S59>/Saturation' */
@@ -1547,12 +1546,12 @@ void pid_control_V3::step()
   }
 
   /* BusAssignment: '<Root>/Bus Assignment' incorporates:
-   *  Gain: '<Root>/Gain3'
+   *  Gain: '<Root>/Gain6'
    */
   memset(&pid_control_V3_B.BusAssignment, 0, sizeof
          (SL_Bus_gazebo_msgs_SetEntityStateRequest));
-  pid_control_V3_B.BusAssignment.state.pose.position.x = pid_control_V3_B.x[9];
-  pid_control_V3_B.BusAssignment.state.pose.position.y = -pid_control_V3_B.x[10];
+  pid_control_V3_B.BusAssignment.state.pose.position.x = pid_control_V3_B.x[10];
+  pid_control_V3_B.BusAssignment.state.pose.position.y = -pid_control_V3_B.x[9];
   pid_control_V3_B.BusAssignment.state.pose.position.z = pid_control_V3_B.Gain;
   pid_control_V3_B.BusAssignment.state.pose.orientation.w =
     pid_control_V3_B.rtb_CoordinateTransformationC_n;
@@ -1678,7 +1677,7 @@ void pid_control_V3::step()
    *  Sum: '<S96>/SumI2'
    */
   pid_control_V3_B.SumI4 = (pid_control_V3_B.Saturation - pid_control_V3_B.cosb)
-    * 0.1 + 0.25 * pid_control_V3_B.cosa;
+    * 0.1 + 0.06 * pid_control_V3_B.cosa;
 
   /* Sum: '<S148>/SumI4' incorporates:
    *  Gain: '<S153>/Integral Gain'
@@ -1702,7 +1701,7 @@ void pid_control_V3::step()
   /* End of DeadZone: '<S202>/DeadZone' */
 
   /* Gain: '<S207>/Integral Gain' */
-  pid_control_V3_B.Switch_l *= -0.5;
+  pid_control_V3_B.Switch_l *= -0.25;
 
   /* Signum: '<S200>/SignPreSat' */
   if (rtIsNaN(pid_control_V3_B.sinb)) {
@@ -3309,7 +3308,7 @@ void pid_control_V3::initialize()
   rtmSetFirstInitCond((&pid_control_V3_M), 1);
 
   /* Start for InitialCondition: '<S13>/IC' */
-  memcpy(&pid_control_V3_B.IC[0], &pid_control_V3_ConstP.pooled11[0], 12U *
+  memcpy(&pid_control_V3_B.IC[0], &pid_control_V3_ConstP.pooled10[0], 12U *
          sizeof(real_T));
 
   /* Start for InitialCondition: '<S13>/IC' */
@@ -3439,7 +3438,7 @@ void pid_control_V3::initialize()
 
   /* InitializeConditions for Memory: '<S13>/Memory2' */
   memcpy(&pid_control_V3_DW.Memory2_PreviousInput[0],
-         &pid_control_V3_ConstP.pooled11[0], 12U * sizeof(real_T));
+         &pid_control_V3_ConstP.pooled10[0], 12U * sizeof(real_T));
 
   /* InitializeConditions for Integrator: '<S13>/Integrator' */
   if (rtmIsFirstInitCond((&pid_control_V3_M))) {

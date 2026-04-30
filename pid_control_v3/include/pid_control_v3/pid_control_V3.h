@@ -6,9 +6,9 @@
  *
  * Code generation for model "pid_control_V3".
  *
- * Model version              : 12.138
+ * Model version              : 12.141
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C++ source code generated on : Wed Apr 29 22:29:37 2026
+ * C++ source code generated on : Thu Apr 30 09:40:21 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -658,7 +658,7 @@ struct ConstP_pid_control_V3_T {
    *   '<S13>/IC'
    *   '<S13>/Memory2'
    */
-  real_T pooled11[12];
+  real_T pooled10[12];
 
   /* Expression: h_vec
    * Referenced by: '<S309>/PreLook-Up Index Search  (altitude)'
@@ -826,6 +826,7 @@ extern volatile boolean_T runModel;
  * These blocks were eliminated from the model due to optimizations:
  *
  * Block '<Root>/Display' : Unused code path elimination
+ * Block '<Root>/Gain3' : Eliminated nontunable gain of 1
  * Block '<Root>/Gain5' : Eliminated nontunable gain of 1
  * Block '<S148>/Kb' : Eliminated nontunable gain of 1
  * Block '<S284>/Cast' : Eliminate redundant data type conversion
