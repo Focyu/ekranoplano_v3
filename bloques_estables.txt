@@ -18,13 +18,13 @@ pid_control_V3/From
 pid_control_V3/From1
 pid_control_V3/From2
 pid_control_V3/Gain
-pid_control_V3/Gain1
-pid_control_V3/Gain2
+pid_control_V3/Gain-phi
+pid_control_V3/Gain-psi
+pid_control_V3/Gain-roll_sp
+pid_control_V3/Gain-theta
 pid_control_V3/Gain3
 pid_control_V3/Gain4
-pid_control_V3/Gain5
 pid_control_V3/Gain6
-pid_control_V3/Gain7
 pid_control_V3/MATLAB Function
 pid_control_V3/MATLAB Function-IMU2
 pid_control_V3/MATLAB Function1
@@ -36,7 +36,7 @@ pid_control_V3/Mux5
 pid_control_V3/Mux6
 pid_control_V3/PID ALERON
 pid_control_V3/PID ALTURA
-pid_control_V3/PID PITCH//ELEVATOR
+pid_control_V3/PID ELEVATOR
 pid_control_V3/PID TIIMON
 pid_control_V3/PID VELOCIDAD
 pid_control_V3/Publish
@@ -174,6 +174,7 @@ pid_control_V3/SUBSYSTEM_MODEL/Out12
 pid_control_V3/Saturation
 pid_control_V3/Saturation_roll_sp
 pid_control_V3/Scope-Direccion
+pid_control_V3/Scope1
 pid_control_V3/Scopes-States
 pid_control_V3/Subscribe-ALTURA1
 pid_control_V3/Subscribe-YAW

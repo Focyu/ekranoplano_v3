@@ -16,7 +16,7 @@ fprintf('Thrust max por motor: %.3f N\n', max_thrust_force_per_motor);
 fprintf('Thrust max total:     %.3f N\n', 2*max_thrust_force_per_motor);
 
 %% CONDICIONES INICIALES
-tsim = 1;
+tsim = 10;
 step = 0.01;
 x_nom = zeros(12,1);
 
@@ -56,20 +56,20 @@ theta_min = -4.0 * (pi/180);
 
 % 3. Lazo Interno de Elevador (Pitch)
 Kp_pitch = -0.50;   
-Ki_pitch = -0.03;  
-Kd_pitch = -0.3;   
+Ki_pitch = -0.015;  
+Kd_pitch = -0.15;   
 
 % 4. Lazo de Timón (Yaw)
 psi_sp = 0 * (pi/180); 
 Kp_yaw = -0.80;   
-Ki_yaw = -0.25;  
-Kd_yaw = -1.05;   
+Ki_yaw = -0.08;  
+Kd_yaw = -0.85;   
 
 % 5. Lazo de Alerones (Roll)
 phi_sp = 0.0; 
-Kp_roll = 0.20;   
-Ki_roll = 0.01;  
-Kd_roll = 0.05;   
+Kp_roll = -0.80;   
+Ki_roll = -0.08;  
+Kd_roll = -0.85;   
 
 
 

@@ -1,7 +1,7 @@
 ==========================================================
 REPORTE DE CÓDIGO INTERNO - MATLAB FUNCTIONS
 Modelo: pid_control_V3
-Fecha: 30-Apr-2026 09:38:35
+Fecha: 03-May-2026 17:57:40
 ==========================================================
 
 ----------------------------------------------------------
@@ -67,6 +67,7 @@ function [XDOT, Va_out, CL_total, h_out, mu_Lw_out, mu_Dw_out] = Model(X, U, U_w
 % Modelo Dinámico del Ekranoplano AirFish 8 (Sincronizado)
 % ESCALA: 1:21.5 | Soporte Coder y Viento
 % CORRECCIONES v2: D_prop 3.5"→5", alpha_0h, iw, CD_0
+% CORRECCIONES v3: Desacoplamiento Ixz (feedforward interno roll-yaw)
 %#codegen
 coder.varsize('XDOT',      [40, 1], [0, 0]);
 coder.varsize('Va_out',    [1,  1], [0, 0]);
@@ -88,11 +89,11 @@ Xapt1 = -0.0721; Yapt1 =  0.0834; Zapt1 = 0.0396;
 Xapt2 = -0.0721; Yapt2 = -0.0834; Zapt2 = 0.0396;
 rho = 1.225; g = 9.81; e0w = 0.9; e0h = 0.9;
 alpha_0w = -3.75*pi/180;
-alpha_0h = -2.50*pi/180; % CORREGIDO: era -4.25° → pitch trimado excesivo
-iw = 1.5*pi/180;         % CORREGIDO: era 1.0° → menor alpha necesario
+alpha_0h = -2.50*pi/180;
+iw = 1.5*pi/180;
 ih = 0.5*pi/180;
 zw = 0.0505; zh = 0.3475;
-CD_0 = 0.0420;           % CORREGIDO: era 0.0306 → Reynolds bajo en escala pequeña
+CD_0 = 0.0420;
 
 %-----------SATURACIÓN DE CONTROLES-------------------------------
 u1 = max(min(u1,  20*pi/180), -20*pi/180);
@@ -111,12 +112,12 @@ w_r = x3 + w_wg;
 
 Va = sqrt(u_r^2 + v_r^2 + w_r^2);
 if Va < 0.5
-    Va    = 0.5;     % CORREGIDO: era Va==0 → 0.001, ahora umbral más seguro
+    Va    = 0.5;
     alpha = 0.0;
     beta  = 0.0;
 else
     alpha = atan2(w_r, u_r);
-    beta  = asin(max(-1.0, min(1.0, v_r / Va))); % CORREGIDO: clamping para evitar asin(>1)
+    beta  = asin(max(-1.0, min(1.0, v_r / Va)));
 end
 Va_out = Va;
 
@@ -176,10 +177,9 @@ Cn = -0.1146*beta   + Cn_r*(r_aero*bw/(2*Va))   + Cn_dr*u3  + Cn_da*u1;
 MAcg_b = [Cl; Cm; Cn] .* [bw*Q*Sw; cbar*Q*Sw; bw*Q*Sw];
 
 %-----------MOTOR BRUSHLESS (CORREGIDO)---------------------------
-% Motor: 2204-2300KV | Hélice: APC 5x4.5E
 km_motor = 25.0;
 Cp_motor = 0.57;
-D_prop   = 0.1270;           % CORREGIDO: era 0.0883 m (3.5") → 0.1270 m (5")
+D_prop   = 0.1270;
 Sp_prop  = pi*(D_prop^2/4);
 
 Vd1 = Va + u4*(km_motor - Va);
@@ -198,7 +198,7 @@ MEcg_b  = MEcg1_b + MEcg2_b;
 %-----------DINÁMICA---------------------------------------------
 g_b  = [-g*sin(x8); g*cos(x8)*sin(x7); g*cos(x8)*cos(x7)];
 Fg_b = m*g_b;
-F_b  = Fg_b + FE_b + FA_b;  % sin hidrodinámica en esta versión
+F_b  = Fg_b + FE_b + FA_b;
 x1to3dot = (1/m)*F_b - cross(wbe_b, V_b);
 Mcg_b = MAcg_b + MEcg_b;
 
@@ -207,9 +207,15 @@ Gamma = Ixx*Izz - Ixz^2;
 p = wbe_b(1); q = wbe_b(2); r = wbe_b(3);
 L = Mcg_b(1); M = Mcg_b(2); N = Mcg_b(3);
 
-p_dot = (Izz*L + Ixz*N - (Ixz*(Iyy-Ixx-Izz)*p + (Ixz^2+Izz*(Izz-Iyy))*r)*q) / Gamma;
+% --- DESACOPLAMIENTO Ixz (feedforward interno roll-yaw) ----------
+L_ff  = -(Ixz / Izz) * N;                                  % <<< NUEVO
+L_dec = L + L_ff;                                           % <<< NUEVO
+% ----------------------------------------------------------------
+
+p_dot = (Izz*L_dec + Ixz*N - (Ixz*(Iyy-Ixx-Izz)*p + (Ixz^2+Izz*(Izz-Iyy))*r)*q) / Gamma;  % <<< MODIFICADO
 q_dot = (M - (Ixx-Izz)*p*r - Ixz*(p^2-r^2)) / Iyy;
-r_dot = (Ixz*L + Ixx*N + (Ixz*(Iyy-Ixx-Izz)*r + (Ixz^2+Ixx*(Ixx-Iyy))*p)*q) / Gamma;
+r_dot = (Ixz*L_dec + Ixx*N + (Ixz*(Iyy-Ixx-Izz)*r + (Ixz^2+Ixx*(Ixx-Iyy))*p)*q) / Gamma;  % <<< MODIFICADO
+
 x4to6dot = [p_dot; q_dot; r_dot];
 
 H_phi = [1 sin(x7)*tan(x8) cos(x7)*tan(x8);
@@ -220,7 +226,7 @@ x7to9dot = H_phi * wbe_b;
 x10to12dot = rot_body_to_ned(X(1:9));
 
 %-----------SALIDAS----------------------------------------------
-LD_ratio = Ltot / max(Dtot, 0.001); % CORREGIDO: evita div/0 cuando Dtot→0
+LD_ratio = Ltot / max(Dtot, 0.001);
 XDOT = [x1to3dot; x4to6dot; x7to9dot; x10to12dot; ...
         LD_ratio; F_b; Mcg_b; CQ; Cl; Cm; Cn; alpha; beta; ...
         CL_w_OGE; CL_h_OGE; CL_w_IGE; CL_h_IGE; ...
