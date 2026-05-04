@@ -57,19 +57,19 @@ theta_min = -4.0 * (pi/180);
 % 3. Lazo Interno de Elevador (Pitch)
 Kp_pitch = -0.50;   
 Ki_pitch = -0.015;  
-Kd_pitch = -0.15;   
+Kd_pitch = -0.30;   
 
 % 4. Lazo de Timón (Yaw)
 psi_sp = 0 * (pi/180); 
-Kp_yaw = -0.80;   
-Ki_yaw = -0.08;  
-Kd_yaw = -0.85;   
+Kp_yaw = 0.8;   
+Ki_yaw = 0.02;  
+Kd_yaw = 0.85;   
 
 % 5. Lazo de Alerones (Roll)
 phi_sp = 0.0; 
-Kp_roll = -0.80;   
-Ki_roll = -0.08;  
-Kd_roll = -0.85;   
+Kp_roll = -0.40;   
+Ki_roll = -0.0;  
+Kd_roll = -0.05;   
 
 
 
