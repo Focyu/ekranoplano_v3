@@ -6,9 +6,9 @@
  *
  * Code generation for model "pid_control_V3".
  *
- * Model version              : 12.146
+ * Model version              : 12.147
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C++ source code generated on : Sun May  3 17:54:58 2026
+ * C++ source code generated on : Sun May  3 21:47:24 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping

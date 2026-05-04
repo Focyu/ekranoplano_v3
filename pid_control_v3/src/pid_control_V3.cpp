@@ -6,9 +6,9 @@
  *
  * Code generation for model "pid_control_V3".
  *
- * Model version              : 12.146
+ * Model version              : 12.147
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C++ source code generated on : Sun May  3 17:54:58 2026
+ * C++ source code generated on : Sun May  3 21:47:24 2026
  *
  * Target selection: ert.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -961,23 +961,23 @@ void pid_control_V3::step()
    *  Integrator: '<S203>/Filter'
    *  Sum: '<S203>/SumD'
    */
-  pid_control_V3_B.FilterCoefficient_p = (-0.85 * pid_control_V3_B.sinb -
+  pid_control_V3_B.FilterCoefficient_p = (0.85 * pid_control_V3_B.sinb -
     pid_control_V3_X.Filter_CSTATE_f) * 10.0;
 
   /* Sum: '<S217>/Sum' incorporates:
    *  Gain: '<S213>/Proportional Gain'
    *  Integrator: '<S208>/Integrator'
    */
-  pid_control_V3_B.sinc = (-0.8 * pid_control_V3_B.sinb +
+  pid_control_V3_B.sinc = (0.8 * pid_control_V3_B.sinb +
     pid_control_V3_X.Integrator_CSTATE_d) + pid_control_V3_B.FilterCoefficient_p;
 
   /* Saturate: '<S215>/Saturation' */
-  if (pid_control_V3_B.sinc > 0.26179938779914941) {
+  if (pid_control_V3_B.sinc > 0.09) {
     /* Saturate: '<S215>/Saturation' */
-    pid_control_V3_B.Saturation_m = 0.26179938779914941;
-  } else if (pid_control_V3_B.sinc < -0.26179938779914941) {
+    pid_control_V3_B.Saturation_m = 0.09;
+  } else if (pid_control_V3_B.sinc < -0.09) {
     /* Saturate: '<S215>/Saturation' */
-    pid_control_V3_B.Saturation_m = -0.26179938779914941;
+    pid_control_V3_B.Saturation_m = -0.09;
   } else {
     /* Saturate: '<S215>/Saturation' */
     pid_control_V3_B.Saturation_m = pid_control_V3_B.sinc;
@@ -985,18 +985,20 @@ void pid_control_V3::step()
 
   /* End of Saturate: '<S215>/Saturation' */
 
-  /* Saturate: '<Root>/Saturation_roll_sp' incorporates:
-   *  Gain: '<Root>/Gain-roll_sp'
-   */
-  if (-pid_control_V3_B.Saturation_m > 0.21) {
-    /* Saturate: '<Root>/Saturation_roll_sp' */
-    pid_control_V3_B.Saturation_roll_sp = 0.21;
-  } else if (-pid_control_V3_B.Saturation_m < -0.21) {
-    /* Saturate: '<Root>/Saturation_roll_sp' */
-    pid_control_V3_B.Saturation_roll_sp = -0.21;
-  } else {
-    /* Saturate: '<Root>/Saturation_roll_sp' */
-    pid_control_V3_B.Saturation_roll_sp = -pid_control_V3_B.Saturation_m;
+  /* Gain: '<Root>/Gain-roll_sp' */
+  pid_control_V3_B.Saturation_roll_sp = -0.25 * pid_control_V3_B.Saturation_m;
+
+  /* Saturate: '<Root>/Saturation_roll_sp' */
+  if (pid_control_V3_B.Saturation_roll_sp > 0.1) {
+    /* Gain: '<Root>/Gain-roll_sp' incorporates:
+     *  Saturate: '<Root>/Saturation_roll_sp'
+     */
+    pid_control_V3_B.Saturation_roll_sp = 0.1;
+  } else if (pid_control_V3_B.Saturation_roll_sp < -0.1) {
+    /* Gain: '<Root>/Gain-roll_sp' incorporates:
+     *  Saturate: '<Root>/Saturation_roll_sp'
+     */
+    pid_control_V3_B.Saturation_roll_sp = -0.1;
   }
 
   /* End of Saturate: '<Root>/Saturation_roll_sp' */
@@ -1012,23 +1014,23 @@ void pid_control_V3::step()
    *  Integrator: '<S47>/Filter'
    *  Sum: '<S47>/SumD'
    */
-  pid_control_V3_B.FilterCoefficient_c = (-0.85 * pid_control_V3_B.Switch -
+  pid_control_V3_B.FilterCoefficient_c = (-0.05 * pid_control_V3_B.Switch -
     pid_control_V3_X.Filter_CSTATE_g) * 100.0;
 
   /* Sum: '<S61>/Sum' incorporates:
    *  Gain: '<S57>/Proportional Gain'
    *  Integrator: '<S52>/Integrator'
    */
-  pid_control_V3_B.SignPreSat = (-0.8 * pid_control_V3_B.Switch +
+  pid_control_V3_B.SignPreSat = (-0.4 * pid_control_V3_B.Switch +
     pid_control_V3_X.Integrator_CSTATE_m) + pid_control_V3_B.FilterCoefficient_c;
 
   /* Saturate: '<S59>/Saturation' */
-  if (pid_control_V3_B.SignPreSat > 0.1396) {
+  if (pid_control_V3_B.SignPreSat > 0.09) {
     /* Saturate: '<S59>/Saturation' */
-    pid_control_V3_B.Saturation_k = 0.1396;
-  } else if (pid_control_V3_B.SignPreSat < -0.1396) {
+    pid_control_V3_B.Saturation_k = 0.09;
+  } else if (pid_control_V3_B.SignPreSat < -0.09) {
     /* Saturate: '<S59>/Saturation' */
-    pid_control_V3_B.Saturation_k = -0.1396;
+    pid_control_V3_B.Saturation_k = -0.09;
   } else {
     /* Saturate: '<S59>/Saturation' */
     pid_control_V3_B.Saturation_k = pid_control_V3_B.SignPreSat;
@@ -1595,18 +1597,18 @@ void pid_control_V3::step()
     pid_control_V3_B.SignPreSat;
 
   /* DeadZone: '<S44>/DeadZone' */
-  if (pid_control_V3_B.SignPreSat > 0.1396) {
-    pid_control_V3_B.SignPreSat -= 0.1396;
-  } else if (pid_control_V3_B.SignPreSat >= -0.1396) {
+  if (pid_control_V3_B.SignPreSat > 0.09) {
+    pid_control_V3_B.SignPreSat -= 0.09;
+  } else if (pid_control_V3_B.SignPreSat >= -0.09) {
     pid_control_V3_B.SignPreSat = 0.0;
   } else {
-    pid_control_V3_B.SignPreSat -= -0.1396;
+    pid_control_V3_B.SignPreSat -= -0.09;
   }
 
   /* End of DeadZone: '<S44>/DeadZone' */
 
   /* Gain: '<S49>/Integral Gain' */
-  pid_control_V3_B.Switch *= -0.08;
+  pid_control_V3_B.Switch *= -0.0;
 
   /* Signum: '<S42>/SignPreSat' */
   if (rtIsNaN(pid_control_V3_B.SignPreSat)) {
@@ -1629,37 +1631,10 @@ void pid_control_V3::step()
 
   /* End of Signum: '<S42>/SignPreSat' */
 
-  /* Signum: '<S42>/SignPreIntegrator' */
-  if (rtIsNaN(pid_control_V3_B.Switch)) {
-    /* DataTypeConversion: '<S42>/DataTypeConv2' */
-    tmp_2 = 0;
-  } else {
-    if (pid_control_V3_B.Switch < 0.0) {
-      /* DataTypeConversion: '<S42>/DataTypeConv2' */
-      pid_control_V3_B.rtb_CoordinateTransformationC_g = -1.0;
-    } else {
-      /* DataTypeConversion: '<S42>/DataTypeConv2' */
-      pid_control_V3_B.rtb_CoordinateTransformationC_g =
-        (pid_control_V3_B.Switch > 0.0);
-    }
-
-    /* DataTypeConversion: '<S42>/DataTypeConv2' */
-    tmp_2 = static_cast<int32_T>(fmod
-      (pid_control_V3_B.rtb_CoordinateTransformationC_g, 256.0));
-  }
-
-  /* End of Signum: '<S42>/SignPreIntegrator' */
-
   /* DataTypeConversion: '<S42>/DataTypeConv1' */
   if (i < 0) {
     i = static_cast<int8_T>(-static_cast<int8_T>(static_cast<uint8_T>(-
       static_cast<real_T>(i))));
-  }
-
-  /* DataTypeConversion: '<S42>/DataTypeConv2' */
-  if (tmp_2 < 0) {
-    tmp_2 = static_cast<int8_T>(-static_cast<int8_T>(static_cast<uint8_T>(-
-      static_cast<real_T>(tmp_2))));
   }
 
   /* Logic: '<S42>/AND3' incorporates:
@@ -1669,7 +1644,7 @@ void pid_control_V3::step()
    *  RelationalOperator: '<S42>/NotEqual'
    */
   pid_control_V3_B.AND3 = ((pid_control_V3_B.rtb_CoordinateTransformationC_n !=
-    pid_control_V3_B.SignPreSat) && (i == tmp_2));
+    pid_control_V3_B.SignPreSat) && (i == 0));
   if (tmp_0) {
     /* Memory: '<S42>/Memory' */
     pid_control_V3_B.Memory_a = pid_control_V3_DW.Memory_PreviousInput_o;
@@ -1707,7 +1682,7 @@ void pid_control_V3::step()
    *  Sum: '<S200>/SumI2'
    */
   pid_control_V3_B.SumI4_d = (pid_control_V3_B.Saturation_m -
-    pid_control_V3_B.sinc) * 0.2 + -0.08 * pid_control_V3_B.sinb;
+    pid_control_V3_B.sinc) * 0.2 + 0.02 * pid_control_V3_B.sinb;
 
   /* Gain: '<S252>/ZeroGain' */
   pid_control_V3_B.rtb_CoordinateTransformationC_n = 0.0 * pid_control_V3_B.sina;
