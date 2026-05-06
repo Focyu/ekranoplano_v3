@@ -34,8 +34,8 @@ x_nom(12) = -0.550;         % z_NED (altura = 0.55 m)
 u_nom = zeros(5,1);
 u_nom(2)   = 0.0;   % Elevador neutro
 u_nom(4:5) = 0.52;  % CORREGIDO: era 0.80 (sobreempujaba), ahora equilibrado
-x0 = x_nom;
-
+% x0 = x_nom;
+x0 = zeros(12,1);   % todos los estados en cero al inicio
 %% PARAMETROS DE CONTROL PID (Para modelo de 1.2 kg)
 
 % 1. Lazo de Velocidad
@@ -61,15 +61,16 @@ Kd_pitch = -0.30;
 
 % 4. Lazo de Timón (Yaw)
 psi_sp = 0 * (pi/180); 
-Kp_yaw = 0.8;   
-Ki_yaw = 0.02;  
-Kd_yaw = 0.85;   
+Kp_yaw = -0.8;   
+Ki_yaw = -0.02;  
+Kd_yaw = -0.85;   
 
 % 5. Lazo de Alerones (Roll)
-phi_sp = 0.0; 
-Kp_roll = -0.40;   
-Ki_roll = -0.0;  
-Kd_roll = -0.05;   
+phi_sp = 0.0;
+Kp_roll = -0.10;   
+Ki_roll = -0.05;  
+Kd_roll = -0.4;   
+
 
 
 

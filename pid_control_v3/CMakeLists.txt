@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(pid_control_v3)
+project(pid_control_v4)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 # Set CMAKE_BUILD_TYPE
 set(CMAKE_BUILD_TYPE Debug)
@@ -38,16 +38,16 @@ find_package( rosgraph_msgs REQUIRED)
 find_package( sensor_msgs REQUIRED)
 find_package( std_msgs REQUIRED)
 # Add package include directories
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/pid_control_v3")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include/pid_control_v4")
 set (CMAKE_SKIP_BUILD_RPATH false)
 set (CMAKE_BUILD_WITH_INSTALL_RPATH true)
 set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 # Node
-add_executable(pid_control_V3 
+add_executable(pid_control_V4 
 src/main.cpp
-src/pid_control_V3.cpp
-src/pid_control_V3_data.cpp
+src/pid_control_V4.cpp
+src/pid_control_V4_data.cpp
 src/ros2nodeinterface.cpp
 src/rtGetInf.cpp
 src/rtGetNaN.cpp
@@ -56,14 +56,14 @@ src/slros2_initialize.cpp
 src/slros2_multi_threaded_executor.cpp
 )
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-target_compile_options(pid_control_V3 PUBLIC 
+target_compile_options(pid_control_V4 PUBLIC 
   $<$<OR:$<COMPILE_LANGUAGE:CXX>,$<COMPILE_LANGUAGE:C>>:
   -Wall -Wextra -Wpedantic
   >)
 endif()
-target_compile_options(pid_control_V3 PRIVATE
+target_compile_options(pid_control_V4 PRIVATE
   $<$<OR:$<COMPILE_LANGUAGE:CXX>,$<COMPILE_LANGUAGE:C>>:
-  -DMODEL=pid_control_V3
+  -DMODEL=pid_control_V4
   -DNUMST=2
   -DNCSTATES=42
   -DHAVESTDIO
@@ -83,21 +83,21 @@ target_compile_options(pid_control_V3 PRIVATE
   -fpermissive  >
   )
 ament_target_dependencies(
-  pid_control_V3
+  pid_control_V4
   "gazebo_msgs"
   "rclcpp"
   "rosgraph_msgs"
   "sensor_msgs"
   "std_msgs"
 )
-target_include_directories(pid_control_V3 PUBLIC
+target_include_directories(pid_control_V4 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(pid_control_V3 
+target_link_libraries(pid_control_V4 
     "/usr/local/MATLAB/R2025b/sys/os/glnxa64/orig/libstdc++.so.6"
 	${CMAKE_DL_LIBS}
     )
-install(TARGETS pid_control_V3
+install(TARGETS pid_control_V4
   EXPORT export_${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME})
 ament_export_include_directories(
@@ -105,17 +105,17 @@ ament_export_include_directories(
 )
 foreach(file_i ${CUDA_BINS})
 add_custom_command(
-                   TARGET pid_control_V3
+                   TARGET pid_control_V4
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND}
-                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/pid_control_V3_ert_rtw/${file_i}
+                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/pid_control_V4_ert_rtw/${file_i}
 				   )
 add_custom_command(
-                   TARGET pid_control_V3
+                   TARGET pid_control_V4
                    POST_BUILD
                    COMMAND ${CMAKE_COMMAND}
-                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/codegen/exe/pid_control_V3/${file_i}
+                   ARGS -E copy ${PROJECT_SOURCE_DIR}/src/${file_i} ${CMAKE_INSTALL_PREFIX}/codegen/exe/pid_control_V4/${file_i}
 				   )				   
 endforeach(file_i)
 ament_package()
-# Generated on Sun May 03 21:48:02 2026
+# Generated on Wed May 06 01:30:54 2026

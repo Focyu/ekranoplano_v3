@@ -79,8 +79,8 @@ pid_control_V3/SUBSYSTEM_MODEL/MATLAB Function - MODEL [Pin out:2] --(sig_MATLAB
 (Continuous (-q +r)) [Pin in:2]
 pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:12] --(sig_Demux4_p12)-- pid_control_V3/SUBSYSTEM_MODEL/Gain4 [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:12] --(sig_Demux4_p12)-- pid_control_V3/SUBSYSTEM_MODEL/Out12 [Pin in:1]
-pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:7] --(sig_Demux4_p7)-- pid_control_V3/SUBSYSTEM_MODEL/Out7 [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:7] --(sig_Demux4_p7)-- pid_control_V3/SUBSYSTEM_MODEL/Mux [Pin in:1]
+pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:7] --(sig_Demux4_p7)-- pid_control_V3/SUBSYSTEM_MODEL/Out7 [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL/In3 [Pin out:1] --(sig_In3_p1)-- pid_control_V3/SUBSYSTEM_MODEL/Mux4 [Pin in:3]
 pid_control_V3/SUBSYSTEM_MODEL/Demux1 [Pin out:12] --(sig_Demux1_p12)-- pid_control_V3/SUBSYSTEM_MODEL/Gain [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL/Demux1 [Pin out:12] --(sig_Demux1_p12)-- pid_control_V3/SUBSYSTEM_MODEL/Scope2 [Pin in:1]
@@ -178,27 +178,43 @@ pid_control_V3/SUBSYSTEM_MODEL/In1 [Pin out:1] --(sig_In1_p1)-- pid_control_V3/S
 pid_control_V3/SUBSYSTEM_MODEL/Mux4 [Pin out:1] --(control_vector)-- pid_control_V3/SUBSYSTEM_MODEL/To Workspace1 [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL/Mux4 [Pin out:1] --(control_vector)-- pid_control_V3/SUBSYSTEM_MODEL/MATLAB Function - MODEL [Pin in:2]
 pid_control_V3/SUBSYSTEM_MODEL/Demux4 [Pin out:3] --(sig_Demux4_p3)-- pid_control_V3/SUBSYSTEM_MODEL/Out3 [Pin in:1]
-pid_control_V3/Gain-psi [Pin out:1] --(sig_Gain-psi_p1)-- pid_control_V3/Mux [Pin in:2]
-pid_control_V3/Gain-phi [Pin out:1] --(sig_Gain-phi_p1)-- pid_control_V3/Mux [Pin in:3]
-pid_control_V3/Gain-theta [Pin out:1] --(sig_Gain-theta_p1)-- pid_control_V3/Mux [Pin in:1]
-pid_control_V3/Mux [Pin out:1] --(x)-- pid_control_V3/Coordinate Transformation Conversion [Pin in:1]
-pid_control_V3/Mux [Pin out:1] --(x)-- pid_control_V3/Scope1 [Pin in:1]
-pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Unit Delay2 [Pin in:1]
-pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Sum5 [Pin in:1] [Signs:|-+]
-pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Mux5 [Pin in:1]
+pid_control_V3/Demux1 [Pin out:4] --(sig_Demux1_p4)-- pid_control_V3/Bus
+Assignment1 [Pin in:2]
+pid_control_V3/Demux1 [Pin out:4] --(sig_Demux1_p4)-- pid_control_V3/Bus
+Assignment [Pin in:7]
+pid_control_V3/Demux1 [Pin out:4] --(sig_Demux1_p4)-- pid_control_V3/Bus
+Assignment1 [Pin in:4]
+pid_control_V3/Demux1 [Pin out:1] --(sig_Demux1_p1)-- pid_control_V3/Bus
+Assignment1 [Pin in:5]
+pid_control_V3/Demux1 [Pin out:1] --(sig_Demux1_p1)-- pid_control_V3/Bus
+Assignment [Pin in:6]
+pid_control_V3/Demux1 [Pin out:2] --(sig_Demux1_p2)-- pid_control_V3/Bus
+Assignment [Pin in:9]
+pid_control_V3/Demux1 [Pin out:3] --(sig_Demux1_p3)-- pid_control_V3/Bus
+Assignment1 [Pin in:3]
+pid_control_V3/Demux1 [Pin out:3] --(sig_Demux1_p3)-- pid_control_V3/Bus
+Assignment [Pin in:8]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:7] --(sig_SUBSYSTEM_MODEL_p7)-- pid_control_V3/Mux6 [Pin in:2]
+pid_control_V3/SUBSYSTEM_MODEL [Pin out:7] --(sig_SUBSYSTEM_MODEL_p7)-- pid_control_V3/Mux [Pin in:2]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:7] --(sig_SUBSYSTEM_MODEL_p7)-- pid_control_V3/Sum4 [Pin in:2] [Signs:|+-]
-pid_control_V3/SUBSYSTEM_MODEL [Pin out:7] --(sig_SUBSYSTEM_MODEL_p7)-- pid_control_V3/Gain-phi [Pin in:1]
-pid_control_V3/Saturation_roll_sp [Pin out:1] --(sig_Saturation_roll_sp_p1)-- pid_control_V3/Mux6 [Pin in:1]
-pid_control_V3/Saturation_roll_sp [Pin out:1] --(sig_Saturation_roll_sp_p1)-- pid_control_V3/Sum4 [Pin in:1] [Signs:|+-]
+pid_control_V3/Rate Limiter1 [Pin out:1] --(sig_Rate Limiter1_p1)-- pid_control_V3/Sum4 [Pin in:1] [Signs:|+-]
+pid_control_V3/Rate Limiter1 [Pin out:1] --(sig_Rate Limiter1_p1)-- pid_control_V3/Mux6 [Pin in:1]
+pid_control_V3/Rate Limiter2 [Pin out:1] --(sig_Rate Limiter2_p1)-- pid_control_V3/Scopes-States [Pin in:4]
+pid_control_V3/Rate Limiter2 [Pin out:1] --(sig_Rate Limiter2_p1)-- pid_control_V3/SUBSYSTEM_MODEL [Pin in:1]
+pid_control_V3/PID TIIMON [Pin out:1] --(sig_PID TIIMON_p1)-- pid_control_V3/Scopes-States [Pin in:8]
+pid_control_V3/PID TIIMON [Pin out:1] --(sig_PID TIIMON_p1)-- pid_control_V3/SUBSYSTEM_MODEL [Pin in:3]
+pid_control_V3/PID ALERON [Pin out:1] --(sig_PID ALERON_p1)-- pid_control_V3/Rate Limiter2 [Pin in:1]
+pid_control_V3/Rate Transition [Pin out:1] --(sig_Rate Transition_p1)-- pid_control_V3/Rate Limiter1 [Pin in:1]
+pid_control_V3/SUBSYSTEM_MODEL [Pin out:10] --(sig_SUBSYSTEM_MODEL_p10)-- pid_control_V3/Gain6 [Pin in:1]
+pid_control_V3/Mux [Pin out:1] --(x)-- pid_control_V3/Coordinate Transformation Conversion [Pin in:1]
+pid_control_V3/Mux [Pin out:1] --(x)-- pid_control_V3/To Workspace-eulZYX [Pin in:1]
+pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Unit Delay2 [Pin in:1]
+pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Sum5 [Pin in:1] [Signs:|+-]
+pid_control_V3/Switch2 [Pin out:1] --(sig_Switch2_p1)-- pid_control_V3/Mux5 [Pin in:1]
 pid_control_V3/Gain6 [Pin out:1] --(sig_Gain6_p1)-- pid_control_V3/Bus
 Assignment [Pin in:4]
 pid_control_V3/Gain3 [Pin out:1] --(sig_Gain3_p1)-- pid_control_V3/Bus
 Assignment [Pin in:3]
-pid_control_V3/Gain-roll_sp [Pin out:1] --(sig_Gain-roll_sp_p1)-- pid_control_V3/Saturation_roll_sp [Pin in:1]
-pid_control_V3/PID TIIMON [Pin out:1] --(sig_PID TIIMON_p1)-- pid_control_V3/Scopes-States [Pin in:8]
-pid_control_V3/PID TIIMON [Pin out:1] --(sig_PID TIIMON_p1)-- pid_control_V3/Gain-roll_sp [Pin in:1]
-pid_control_V3/PID TIIMON [Pin out:1] --(sig_PID TIIMON_p1)-- pid_control_V3/SUBSYSTEM_MODEL [Pin in:3]
 pid_control_V3/MATLAB Function-IMU2 [Pin out:2] --(sig_MATLAB Function-IMU2_p2)-- pid_control_V3/Bus
 Assignment1 [Pin in:10]
 pid_control_V3/MATLAB Function-IMU2 [Pin out:1] --(sig_MATLAB Function-IMU2_p1)-- pid_control_V3/Bus
@@ -217,6 +233,7 @@ Assignment1 [Pin in:1]
 pid_control_V3/Bus
 Selector1 [Pin out:1] --(<data>)-- pid_control_V3/Switch1 [Pin in:1]
 pid_control_V3/Switch1 [Pin out:1] --(sig_Switch1_p1)-- pid_control_V3/Unit Delay1 [Pin in:1]
+pid_control_V3/Switch1 [Pin out:1] --(sig_Switch1_p1)-- pid_control_V3/Rate Transition [Pin in:1]
 pid_control_V3/Unit Delay1 [Pin out:1] --(sig_Unit Delay1_p1)-- pid_control_V3/Switch1 [Pin in:3]
 pid_control_V3/Subscribe-ROLL [Pin out:1] --(sig_Subscribe-ROLL_p1)-- pid_control_V3/Switch1 [Pin in:2]
 pid_control_V3/Subscribe-ROLL [Pin out:2] --(sig_Subscribe-ROLL_p2)-- pid_control_V3/Bus
@@ -230,8 +247,6 @@ pid_control_V3/Saturation [Pin out:1] --(sig_Saturation_p1)-- pid_control_V3/Mux
 pid_control_V3/Bus
 Selector3 [Pin out:1] --(<data>)-- pid_control_V3/Switch3 [Pin in:1]
 pid_control_V3/Mux5 [Pin out:1] --(sig_Mux5_p1)-- pid_control_V3/Scopes-States [Pin in:7]
-pid_control_V3/PID ALERON [Pin out:1] --(sig_PID ALERON_p1)-- pid_control_V3/SUBSYSTEM_MODEL [Pin in:1]
-pid_control_V3/PID ALERON [Pin out:1] --(sig_PID ALERON_p1)-- pid_control_V3/Scopes-States [Pin in:4]
 pid_control_V3/Subscribe-ALTURA1 [Pin out:2] --(sig_Subscribe-ALTURA1_p2)-- pid_control_V3/Bus
 Selector3 [Pin in:1]
 pid_control_V3/Switch3 [Pin out:1] --(sig_Switch3_p1)-- pid_control_V3/Mux2 [Pin in:1]
@@ -251,8 +266,8 @@ pid_control_V3/Constant_U [Pin out:1] --(sig_Constant_U{Val:u_sp}_p1)-- pid_cont
 pid_control_V3/Mux4 [Pin out:1] --(sig_Mux4_p1)-- pid_control_V3/Scopes-States [Pin in:5]
 pid_control_V3/Mux6 [Pin out:1] --(sig_Mux6_p1)-- pid_control_V3/Scopes-States [Pin in:3]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:9] --(psi)-- pid_control_V3/Mux5 [Pin in:2]
-pid_control_V3/SUBSYSTEM_MODEL [Pin out:9] --(psi)-- pid_control_V3/Sum5 [Pin in:2] [Signs:|-+]
-pid_control_V3/SUBSYSTEM_MODEL [Pin out:9] --(psi)-- pid_control_V3/Gain-psi [Pin in:1]
+pid_control_V3/SUBSYSTEM_MODEL [Pin out:9] --(psi)-- pid_control_V3/Sum5 [Pin in:2] [Signs:|+-]
+pid_control_V3/SUBSYSTEM_MODEL [Pin out:9] --(psi)-- pid_control_V3/Mux [Pin in:1]
 pid_control_V3/Sum5 [Pin out:1] --(sig_Sum5_p1)-- pid_control_V3/PID TIIMON [Pin in:1]
 pid_control_V3/Subscribe-YAW [Pin out:2] --(sig_Subscribe-YAW_p2)-- pid_control_V3/Bus
 Selector2 [Pin in:1]
@@ -288,29 +303,14 @@ pid_control_V3/Gain [Pin out:1] --(sig_Gain_p1)-- pid_control_V3/Mux2 [Pin in:2]
 pid_control_V3/Bus
 Assignment [Pin out:1] --(sig_Bus
 Assignment_p1)-- pid_control_V3/Call Service [Pin in:1]
-pid_control_V3/Demux1 [Pin out:4] --(sig_Demux1_p4)-- pid_control_V3/Bus
-Assignment1 [Pin in:2]
-pid_control_V3/Demux1 [Pin out:4] --(sig_Demux1_p4)-- pid_control_V3/Bus
-Assignment [Pin in:9]
-pid_control_V3/Demux1 [Pin out:3] --(sig_Demux1_p3)-- pid_control_V3/Bus
-Assignment [Pin in:8]
-pid_control_V3/Demux1 [Pin out:3] --(sig_Demux1_p3)-- pid_control_V3/Bus
-Assignment1 [Pin in:3]
-pid_control_V3/Demux1 [Pin out:2] --(sig_Demux1_p2)-- pid_control_V3/Bus
-Assignment1 [Pin in:4]
-pid_control_V3/Demux1 [Pin out:2] --(sig_Demux1_p2)-- pid_control_V3/Bus
-Assignment [Pin in:7]
-pid_control_V3/Demux1 [Pin out:1] --(sig_Demux1_p1)-- pid_control_V3/Bus
-Assignment1 [Pin in:5]
-pid_control_V3/Demux1 [Pin out:1] --(sig_Demux1_p1)-- pid_control_V3/Bus
-Assignment [Pin in:6]
 pid_control_V3/Coordinate Transformation Conversion [Pin out:1] --(sig_Coordinate Transformation Conversion_p1)-- pid_control_V3/Demux1 [Pin in:1]
+pid_control_V3/Coordinate Transformation Conversion [Pin out:1] --(sig_Coordinate Transformation Conversion_p1)-- pid_control_V3/Scope1 [Pin in:1]
+pid_control_V3/Coordinate Transformation Conversion [Pin out:1] --(sig_Coordinate Transformation Conversion_p1)-- pid_control_V3/To Workspace-quatOut [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:8] --(theta)-- pid_control_V3/Mux4 [Pin in:2]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:8] --(theta)-- pid_control_V3/Sum1 [Pin in:2] [Signs:|+-]
-pid_control_V3/SUBSYSTEM_MODEL [Pin out:8] --(theta)-- pid_control_V3/Gain-theta [Pin in:1]
+pid_control_V3/SUBSYSTEM_MODEL [Pin out:8] --(theta)-- pid_control_V3/Mux [Pin in:3]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:12] --(sig_SUBSYSTEM_MODEL_p12)-- pid_control_V3/Gain4 [Pin in:1]
 pid_control_V3/SUBSYSTEM_MODEL [Pin out:12] --(sig_SUBSYSTEM_MODEL_p12)-- pid_control_V3/Gain [Pin in:1]
-pid_control_V3/SUBSYSTEM_MODEL [Pin out:10] --(sig_SUBSYSTEM_MODEL_p10)-- pid_control_V3/Gain6 [Pin in:1]
 pid_control_V3/Blank Message [Pin out:1] --(sig_Blank Message_p1)-- pid_control_V3/Bus
 Assignment [Pin in:1]
 pid_control_V3/Demux [Pin out:1] --(aileron)-- pid_control_V3/Mux1 [Pin in:1]
